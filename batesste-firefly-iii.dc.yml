@@ -61,6 +61,17 @@ services:
     networks:
       - firefly_iii
 
+  backup:
+    image: offen/docker-volume-backup:latest
+    container_name: firefly_iii_backup
+    restart: always
+    env_file:
+      - .backup.env
+      - .aws.creds.env
+    volumes:
+      - firefly_iii_upload:/backup/upload-backup:ro
+      - firefly_iii_db:/backup/db-backup:ro
+
 volumes:
    firefly_iii_upload:
    firefly_iii_db:
