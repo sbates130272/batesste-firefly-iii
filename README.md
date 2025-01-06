@@ -21,9 +21,14 @@ is handy.
 # Credentials
 
 The first time I set this up I created an account. I do not see any
-easy way to automate this. Also two docker volumes were created. In
-time I will perhaps use [this container][ref-backup] to back these up
-on a regular basis.
+easy way to automate this. Also two docker volumes were created.
+
+# Backups
+
+I use [this container][ref-backup] to back these up the volumes
+associated with this service on a regular daily basis to a bucket on
+my [AWS S3][ref-aws-s3] account. See the [configuration
+file](./.backup.env) file for configuration.
 
 # Importing
 
@@ -33,3 +38,4 @@ an easy way to directly access those accounts.
 [ref-firefly]: https://docs.firefly-iii.org/
 [ref-importer]: https://docs.firefly-iii.org/how-to/data-importer/installation/docker/
 [ref-backup]: https://github.com/offen/docker-volume-backup
+[ref-aws-s3]: https://aws.amazon.com/s3/
