@@ -63,6 +63,7 @@ services:
 
   backup:
     image: offen/docker-volume-backup:latest
+    hostname: backup
     container_name: firefly_iii_backup
     restart: always
     env_file:
@@ -71,6 +72,10 @@ services:
     volumes:
       - firefly_iii_upload:/backup/upload-backup:ro
       - firefly_iii_db:/backup/db-backup:ro
+    depends_on:
+      - app
+    networks:
+      - firefly_iii
 
 volumes:
    firefly_iii_upload:
