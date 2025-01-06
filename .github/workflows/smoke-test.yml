@@ -1,0 +1,17 @@
+name: batesste-firefly-iii
+on: [pull_request]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+      - name: Create .aws.creds.env file
+        run: |
+          echo "AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" > .aws.creds.env
+          echo "AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .aws.creds.env
+      - name: Docker Compose based smoke-test
+        uses: hoverkraft-tech/compose-action@v2.0.2
+        with:
+          compose-file: batesste-firefly-iii.dc.yml
