@@ -22,7 +22,7 @@ is handy.
 
 The first time I set this up I created an account. I do not see any
 easy way to automate this. Also two docker volumes were created. In
-time I will perhaps use [this containter][ref-backup] to back these up
+time I will perhaps use [this container][ref-backup] to back these up
 on a regular basis.
 
 # Importing
