@@ -1,5 +1,8 @@
 name: batesste-firefly-iii
-on: [pull_request]
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
 
 jobs:
   smoke-test:
@@ -11,6 +14,10 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"" > .aws.creds.env
           echo "AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"" >> .aws.creds.env
+      - name: Create the external docker volumes
+        run: |
+          docker volume create batesste-firefly-iii-upload
+          docker volume create batesste-firefly-iii-db
       - name: Docker Compose based smoke-test
         uses: hoverkraft-tech/compose-action@v2.0.2
         with:

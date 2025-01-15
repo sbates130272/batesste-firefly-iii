@@ -9,6 +9,14 @@ We use the Docker method to install and we include the [firefly-ii
 data importer][ref-importer]. We also include import configs in JSON
 format in the [import configs folder](./import-configs). We can use
 these for the relevant bank account imports.
+
+Note that before you run the ```docker compose``` command for the
+first time you need to create two docker volumes.
+```bash
+docker volume create batesste-firefly-iii-upload
+docker volume create batesste-firefly-iii-db
+```
+Then
 ```
 docker compose \
   -f batesste-firefly-iii.dc.yml \
