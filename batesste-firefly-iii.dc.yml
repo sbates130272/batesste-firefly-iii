@@ -11,13 +11,13 @@ services:
 
   app:
     image: fireflyiii/core:latest
-    hostname: app
-    container_name: firefly_iii_core
+    hostname: firefly-iii-app
+    container_name: batesste-firefly-iii-core
     networks:
-      - firefly_iii
+      - batesste-firefly-iii
     restart: always
     volumes:
-      - firefly_iii_upload:/var/www/html/storage/upload
+      - batesste-firefly-iii-upload:/var/www/html/storage/upload
     env_file: .env
     ports:
       - '1080:8080'
@@ -26,22 +26,22 @@ services:
 
   db:
     image: mariadb:lts
-    hostname: db
-    container_name: firefly_iii_db
+    hostname: firefly-iii-db
+    container_name: batesste-firefly-iii-db
     networks:
-      - firefly_iii
+      - batesste-firefly-iii
     restart: always
     env_file: .db.env
     volumes:
-      - firefly_iii_db:/var/lib/mysql
+      - batesste-firefly-iii-db:/var/lib/mysql
 
   importer:
     image: fireflyiii/data-importer:latest
-    hostname: importer
+    hostname: firefly-iii-importer
+    container_name: batesste-firefly-iii-importer
     restart: always
-    container_name: firefly_iii_importer
     networks:
-      - firefly_iii
+      - batesste-firefly-iii
     ports:
       - '1081:8080'
     depends_on:
@@ -55,32 +55,36 @@ services:
     # STATIC_CRON_TOKEN must be *exactly* 32 characters long
     #
     image: alpine:latest
-    container_name: firefly_iii_cron
+    container_name: batesste-firefly-iii-cron
     restart: always
-    command: sh -c "echo \"0 3 * * * wget -qO- http://app:8080/api/v1/cron/REPLACEME\" | crontab - && crond -f -L /dev/stdout"
+    command: sh -c "echo \"0 3 * * * wget -qO- http://firefly-iii-app:8080/api/v1/cron/REPLACEME\" | crontab - && crond -f -L /dev/stdout"
     networks:
-      - firefly_iii
+      - batesste-firefly-iii
 
   backup:
     image: offen/docker-volume-backup:latest
-    hostname: backup
-    container_name: firefly_iii_backup
+    hostname: firefly-iii-backup
+    container_name: batesste-firefly-iii-backup
     restart: always
     env_file:
       - .backup.env
       - .aws.creds.env
     volumes:
-      - firefly_iii_upload:/backup/upload-backup:ro
-      - firefly_iii_db:/backup/db-backup:ro
+      - batesste-firefly-iii-upload:/backup/upload-backup:ro
+      - batesste-firefly-iii-db:/backup/db-backup:ro
     depends_on:
       - app
     networks:
-      - firefly_iii
+      - batesste-firefly-iii
 
 volumes:
-   firefly_iii_upload:
-   firefly_iii_db:
+  batesste-firefly-iii-upload:
+    external: true
+    name: batesste-firefly-iii-upload
+  batesste-firefly-iii-db:
+    external: true
+    name: batesste-firefly-iii-db
 
 networks:
-  firefly_iii:
+  batesste-firefly-iii:
     driver: bridge
