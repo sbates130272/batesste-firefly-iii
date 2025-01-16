@@ -72,6 +72,8 @@ services:
     volumes:
       - batesste-firefly-iii-upload:/backup/upload-backup:ro
       - batesste-firefly-iii-db:/backup/db-backup:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     depends_on:
       - app
     networks:
