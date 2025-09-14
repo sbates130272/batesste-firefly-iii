@@ -43,6 +43,15 @@ file](./.backup.env) file for configuration.
 For now I do manual imports for my CIBC and RBC accounts. I do not see
 an easy way to directly access those accounts.
 
+# Updating
+
+To update to the latest versions of the containers used in this
+compose do the following:
+```
+docker compose -f batesste-firefly-iii.dc.yml down
+docker compose -f batesste-firefly-iii.dc.yml pull
+docker compose -d -f batesste-firefly-iii.dc.yml up -d --build
+```
 [ref-firefly]: https://docs.firefly-iii.org/
 [ref-importer]: https://docs.firefly-iii.org/how-to/data-importer/installation/docker/
 [ref-backup]: https://github.com/offen/docker-volume-backup
